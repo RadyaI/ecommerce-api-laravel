@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\karyawanController;
 use App\Http\Controllers\authController;
+use App\Http\Controllers\produkController;
 // use App\Models\karyawan;
 
 /*
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [authController::class, 'login']);
 Route::post('/logout', [authController::class, 'logout'])->middleware(['auth:sanctum']);
 
+
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     // Karyawan
@@ -33,6 +35,14 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/createKaryawan', [karyawanController::class, 'createKaryawan']);
     Route::put('/updateKaryawan/{id}', [karyawanController::class, 'updateKaryawan']);
     Route::delete('/deleteKaryawan/{id}', [karyawanController::class, 'deleteKaryawan']);
+
+    // Produk
+    Route::get('/getProduk',[produkController::class,'getProduk']);
+    Route::get('/getProduk/{id}',[produkController::class,'selectProduk']);
+    Route::post('/createProduk',[produkController::class,'createProduk']);
+    Route::put('/updateProduk/{id}',[produkController::class,'updateProduk']);
+    Route::delete('/deleteProduk/{id}',[produkController::class,'deleteProduk']);
+
 });
 
 Route::middleware(['auth:sanctum', 'role:manager'])->group(function () {
