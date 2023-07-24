@@ -84,4 +84,13 @@ class produkController extends Controller
             'msg' => 'Failed Update Produk'
         ], 500);
     }
+
+    function deleteProduk($id)
+    {
+        $delete = produk::where('id_produk', $id)->delete();
+        if ($delete) {
+            return response()->json(['msg' => 'Berhasil Delete Produk']);
+        }
+            return response()->json(['msg' => 'Gagal Delete Produk']);
+    }
 }
