@@ -78,7 +78,7 @@ class produkController extends Controller
             return response()->json([
                 'msg' => 'Success Update Produk'
             ], 200);
-        }
+        }   
 
         return response()->json([
             'msg' => 'Failed Update Produk'

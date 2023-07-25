@@ -18,7 +18,7 @@ class authController extends Controller
         ]);
 
         $check = karyawan::where('email', $req->email)->first();
-        $getRole = karyawan::where('email',$req->email)->select('nama_karyawan')->first();
+        $getRole = karyawan::where('email', $req->email)->select('nama_karyawan')->first();
         // dd($check);
         if (!$check || !Hash::check($req->password, $check->password)) {
             throw ValidationException::withMessages([
@@ -26,10 +26,21 @@ class authController extends Controller
                 'password' => ['Ini juga'],
             ]);
         }
-        return $check->createToken($getRole)->plainTextToken;
+        
+        $name = $check->nama_karyawan;
+        $id = $check->id_karyawan;
+        $role = $check->role;
+
+        return response()->json([
+            'nama' => $name,
+            'id_karyawan' => $id,
+            'role' => $role,
+            'token' => $check->createToken($getRole)->plainTextToken,
+        ]);
     }
 
-    function logout(Request $req) {
+    function logout(Request $req)
+    {
         $req->user()->currentAccessToken()->delete();
         return response()->json(['msg' => 'Logout Success']);
     }
